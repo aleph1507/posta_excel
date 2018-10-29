@@ -1,7 +1,21 @@
 $(document).ready(function() {
+  var adresnik = new function() {
+    this.ime = 'Име на примач';
+    this.adresa = 'Адреса на примач';
+    this.mesto = 'Место на примач';
+    this.telefon = 'Телефон на примач';
+    this.tezina = 'Тежина';
+    this.p_otkup = 'Повратен откуп';
+    this.p_dokument = 'Повратен документ';
+    this.zabeleska = 'Забелешка';
+    this.seriski = 'Сериски';
+  }
+
   var modal = $('#myModal');
+  var showSpecs = $('#showSpecs');
   var json_object = null;
   var btnSaveExcel = $("#btnSaveExcel");
+  var btnShowSpec = $(".btnShowSpec");
 
   function makeTable(json_xlsx){
     var table = document.createElement("table");
@@ -18,6 +32,13 @@ $(document).ready(function() {
     modal.css({'display' : 'block'});
     $(".close, .cancel").on('click', function(e) {
       modal.css({'display' : 'none'});
+    });
+  }
+
+  function showSpecsModal() {
+    showSpecs.css({'display' : 'block'});
+    $(".close, .cancel").on('click', function(e) {
+      showSpecs.css({'display' : 'none'});
     });
   }
 
@@ -45,8 +66,6 @@ $(document).ready(function() {
   });
 
   btnSaveExcel.on('click', function(e) {
-    console.log('json_object');
-    console.log(json_object);
     axios.post('/specs/store', {
       data: JSON.stringify(json_object)
     })
@@ -58,4 +77,32 @@ $(document).ready(function() {
       toastr.error(error, 'There\'s been an error');
     });
   });
+
+  btnShowSpec.on('click', function(e) {
+    axios.get('/specs/' + $(e.target).data('spec'))
+    .then(function(response){
+      var table_spec = document.getElementById('table_spec');
+      var specsTable = '<table class="table table-striped table-hover table-sm">';
+      $.each(response.data, function(index, value) {
+        specsTable += '<tr>';
+          specsTable += '<td>' + response.data[index][adresnik.ime] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.adresa] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.mesto] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.telefon] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.tezina] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.p_otkup] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.p_dokument] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.zabeleska] + '</td>';
+          specsTable += '<td>' + response.data[index][adresnik.seriski] + '</td>';
+        specsTable += '</tr>';
+      });
+      specsTable += '</table>';
+      table_spec.innerHTML = specsTable;
+      showSpecsModal();
+    })
+    .catch(function(error){
+      toastr.error(error, 'There\'s been an error reading the data');
+    });
+  });
+
 })

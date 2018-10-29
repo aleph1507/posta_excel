@@ -20,7 +20,8 @@ class SpecsController extends Controller
      */
     public function index()
     {
-        //
+        $specs = auth()->user()->specs()->orderBy('created_at', 'desc')->paginate(10);
+        return view('welcome')->with(compact('specs'));
     }
 
     /**
@@ -67,7 +68,7 @@ class SpecsController extends Controller
      */
     public function show($id)
     {
-        //
+        return json_encode(Spec::find($id)->entries);
     }
 
     /**

@@ -61,7 +61,7 @@ div.full {
     cursor: pointer;
 }
 
-div.table_xlsx {
+div.table_xlsx, div.table_spec {
   max-height: 40vh;
   overflow:auto;
 }

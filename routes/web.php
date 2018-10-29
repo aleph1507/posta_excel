@@ -11,12 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+// Route::get('/', function () {
+//     return Spec::orderBy('created_at', 'desc')->paginate();
+//     return view('welcome');
+// })->middleware('auth');
+
+
+// Route::get('/')
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'SpecsController@index')->name('specs.index');
+
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/specs/store', 'SpecsController@store')->name('specs.store');
+
+Route::get('/specs/{id}', 'SpecsController@show')->name('specs.show');

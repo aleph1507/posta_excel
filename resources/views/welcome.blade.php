@@ -1,21 +1,48 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Upload Excel</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-  </head>
-  <body>
-    <div class="full d-flex flex-column justify-content-center align-items-center">
-      <div class="upload_file">
-        <label class="btn btn-lg btn-outline-dark input-btn">
-          <input type="file" class="upload-input d-none" id="upload_excel" name="upload_excel">
-            Upload Excel
-        </label>
-      </div>
-    </div>
+@extends('layouts.app')
+  @section('content')
+      <div class="row">
+
+        <div class="col-xs-12 col-md-6 offset-md-3">
+          <div class="table-responsive mt-5">
+            <table class="table table-striped table-hover table-sm">
+              <thead class="thead-dark">
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Barcode</th>
+                <th scope="col">See Spec</th>
+              </thead>
+              <tbody>
+                @for($i=0; $i<count($specs); $i++)
+                  <tr>
+                    <th scope="row">{{($specs->currentPage() - 1) * $specs->perPage() + $i + 1}}</th>
+                    <td>{{$specs[$i]->user->name}}</td>
+                    <td>{{$specs[$i]->barcode}}</td>
+                    <td>
+                      <button data-spec="{{$specs[$i]->id}}" class="btn btn-outline-info btn-sm btnShowSpec">
+                        Spec {{($specs->currentPage() - 1) * $specs->perPage() + $i + 1}}
+                      </button>
+                    </td>
+                  </tr>
+                @endfor
+              </tbody>
+            </table>
+          </div>
+
+          {{$specs->links()}}
+        </div>
+
+        <div class="col-xs-12 col-md-1">
+          <div class="full d-flex flex-column justify-content-center align-items-start">
+            <div class="upload_file">
+              <label class="btn btn-lg btn-outline-dark input-btn rounded-circle">
+                <input type="file" class="upload-input d-none" id="upload_excel" name="upload_excel">
+                +
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div> {{-- /row --}}
 
     <div id="myModal" class="modal">
       <div class="modal-content">
@@ -34,7 +61,21 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
-  </body>
-</html>
+    <div id="showSpecs" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <div class="table_spec" id="table_spec"></div>
+          <div class="row mt-5">
+            <div class="col-xs-10 col-md-6">
+              <a href="#"
+                id="btnSaveExcel"
+                class="btn btn-lg btn-outline-primary w-100">Print</a>
+            </div>
+            <div class="col-xs-10 col-md-6">
+              <a href="#" class="btn btn-lg btn-outline-info w-100 cancel">Cancel</a>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  @endsection
