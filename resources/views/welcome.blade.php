@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-xs-12 col-md-1">
-          <div class="full d-flex flex-column justify-content-center align-items-start">
+          <div class="full d-flex flex-column justify-content-start align-items-start">
             <div class="upload_file">
               <label class="btn btn-lg btn-outline-dark input-btn rounded-circle">
                 <input type="file" class="upload-input d-none" id="upload_excel" name="upload_excel">
