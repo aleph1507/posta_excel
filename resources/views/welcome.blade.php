@@ -1,9 +1,12 @@
 @extends('layouts.app')
   @section('content')
+    <script type="text/javascript" src="{{asset('js/JsBarcode.all.min.js')}}"></script>
+    <svg id="barcode" class="d-none"></svg>
     <div class="screen">
       <script type="text/javascript">
         var specs = [];
       </script>
+        <div class="d-none" id="barcodes"></div>
         <div class="row">
           <div class="col-xs-12 col-md-6 offset-md-3">
             <div class="table-responsive mt-5">

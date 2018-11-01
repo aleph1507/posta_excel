@@ -33,11 +33,17 @@ $(document).ready(function() {
     axios.get('/specs/' + $(e.target).data('spec'))
       .then(function(response){
         var user;
+        var barcodes = [];
         var adresnici = response.data;
+        var bcs = document.getElementById('barcodes');
         var table_spec = document.getElementById('table_spec');
         var specsTable = '<table class="table table-striped table-hover table-sm">';
         console.log('response.data', response.data);
         $.each(response.data, function(index, value) {
+          bc = document.createElement('img');
+          bc.setAttribute('id', 'barcode' + index);
+          bcs.appendChild(bc);
+          JsBarcode(bc, response.data[index][adresnik.seriski]);
           specsTable += '<tr>';
             specsTable += '<td>' + response.data[index][adresnik.ime] + '</td>';
             specsTable += '<td>' + response.data[index][adresnik.adresa] + '</td>';
@@ -59,7 +65,8 @@ $(document).ready(function() {
         .then(function(response){
           user = response.data;
           $('.pAdresnica').on('click', function(e){
-            printAdresnica(adresnici[$(e.target).data('index')], user);
+            barcode = document.getElementById('barcode' + $(e.target).data('index'));
+            printAdresnica(adresnici[$(e.target).data('index')], user, barcode);
           });
         })
         .catch(function(error){
