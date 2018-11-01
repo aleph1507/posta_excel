@@ -131,21 +131,33 @@ $(document).ready(function() {
 
   function setupPrintSpec(e) {
     console.log('setupPrintSpec');
+    var spec_bcs = document.getElementById('barcodes');
+    var spec_bc;
+    // bc = document.createElement('img');
+    // bc.setAttribute('id', 'barcode' + index);
+    // bcs.appendChild(bc);
+    // JsBarcode(bc, response.data[index][adresnik.seriski]);
+
     entries = null;
     spec = null;
     for(i = 0; i<specs.length; i++){
       if(specs[i].id == $(e.target).data('spec')){
+
         spec = specs[i];
         break;
       }
     }
     axios.get('/specs/' + spec.id)
     .then(function(response){
-      printSpec(response.data, spec);
+      spec_bc = document.createElement('img');
+      // spec_bc.setAttribute('id', '')
+      spec_bcs.appendChild(spec_bc);
+      JsBarcode(spec_bc, spec.barcode);
+      printSpec(response.data, spec, spec_bc);
     })
-    .catch(function(error){
-      toastr.error(error, 'There\'s been an error reading the data')
-    })
+    // .catch(function(error){
+    //   toastr.error(error, 'There\'s been an error reading the data')
+    // })
   }
 
   btnShowSpec.on('click', specsTable);

@@ -1,4 +1,5 @@
-function printSpec(entries, spec) {
+function printSpec(entries, spec, spec_bc) {
+  console.log(spec_bc);
   stylePage = '@page {size: landscape;}';
   styleFont = '* {font-family: Arial, sans-serif;} p, td, .signDiv{font-size:0.8em;}';
   styleContainer = '.cont {padding:1%;}';
@@ -12,7 +13,8 @@ function printSpec(entries, spec) {
   styleTrSum = '.tr_sum {font-weight:bold; border:0; text-align:left;}';
   styleSignDiv = '.signDiv {display:flex; justify-content:space-between; margin-top:2%;}';
   styleSignDivChildren = '.signDiv div {display:flex; align-items:center; justify-content:center; width:15%; padding:2% 10%; border-bottom:1px solid black;}';
-  style = stylePage + styleFont + styleContainer + styleHeaderLogo + styleHeader + styleCaption +
+  styleBCimg = '.lbc {position:relative; max-width:15%;}';
+  style = stylePage + styleFont + styleContainer + styleBCimg + styleHeaderLogo + styleHeader + styleCaption +
     styleTable + styleThead + styleTR + styleTD + styleTrSum + styleSignDiv + styleSignDivChildren;
   docStart = '<html><head><style>';
   docStart += style;
@@ -21,7 +23,8 @@ function printSpec(entries, spec) {
   header = '<div class="header">';
   header += '<img src="' + tpl_logo + '" class="header-logo">';
   header += '<h3 style="display:inline; margin: auto;">Потврда за прием на пратки</h3><br>';
-  header += spec.barcode;
+  header += '<img class="lbc" src="' + spec_bc.src + '">';
+  // header += spec.barcode;
   header += '</div>';
   caption = '<div style="text-align:center;"><p class="caption">Спецификација за превземени пратки од импорт листа ' +
         spec.barcode + ' на датум ' + spec.created_at.split(' ')[0] + '</p></div>';
@@ -54,6 +57,7 @@ function printSpec(entries, spec) {
 
   winHTML = docStart + header + caption + table + sign_div + docEnd;
   printWindow = window.open();
+  console.log('winHTML: ', winHTML);
   printWindow.document.write(winHTML);
   printWindow.document.close();
 
