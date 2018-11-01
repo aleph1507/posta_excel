@@ -17,17 +17,6 @@ class User extends Authenticatable
      * @var array
      */
 
-     // $table->string('name');
-     // // $table->string('email')->unique();
-     // $table->string('adresa');
-     // $table->string('opstina');
-     // $table->string('postenski_broj');
-     // $table->string('kontact_lice_telefon');
-     // // $table->timestamp('email_verified_at')->nullable();
-     // $table->string('password');
-     // $table->rememberToken();
-     // $table->timestamps();
-
      protected $fillable = [
          'name', 'adresa', 'password',
          'opstina', 'postenski_broj', 'kontakt_lice_telefon'

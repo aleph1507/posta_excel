@@ -16,6 +16,7 @@ $(document).ready(function() {
   var json_object = null;
   var btnSaveExcel = $("#btnSaveExcel");
   var btnShowSpec = $(".btnShowSpec");
+  var btnPrintSpec = $(".btnPrintSpec");
 
   function makeTable(json_xlsx){
     var table = document.createElement("table");
@@ -26,6 +27,48 @@ $(document).ready(function() {
     table.appendChild(thead);
     table.appendChild(tbody);
     return table;
+  }
+
+  function specsTable(e) {
+    axios.get('/specs/' + $(e.target).data('spec'))
+      .then(function(response){
+        var user;
+        var adresnici = response.data;
+        var table_spec = document.getElementById('table_spec');
+        var specsTable = '<table class="table table-striped table-hover table-sm">';
+        console.log('response.data', response.data);
+        $.each(response.data, function(index, value) {
+          specsTable += '<tr>';
+            specsTable += '<td>' + response.data[index][adresnik.ime] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.adresa] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.mesto] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.telefon] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.tezina] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.p_otkup] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.p_dokument] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.zabeleska] + '</td>';
+            specsTable += '<td>' + response.data[index][adresnik.seriski] + '</td>';
+            specsTable += '<td>' +
+              '<button class="btn btn-sm btn-outline-dark pAdresnica" data-index="' + index + '">Print</a>' + '</td>';
+          specsTable += '</tr>';
+        });
+        specsTable += '</table>';
+        table_spec.innerHTML = specsTable;
+        showSpecsModal();
+        axios.post('/user/info')
+        .then(function(response){
+          user = response.data;
+          $('.pAdresnica').on('click', function(e){
+            printAdresnica(adresnici[$(e.target).data('index')], user);
+          });
+        })
+        .catch(function(error){
+          toastr.error(error, 'There\'s been an error fetching the user');
+        });
+      })
+      .catch(function(error){
+        toastr.error(error, 'There\'s been an error reading the data');
+      });
   }
 
   function make_modal() {
@@ -70,6 +113,7 @@ $(document).ready(function() {
       data: JSON.stringify(json_object)
     })
     .then(function(response) {
+      location.reload();
       toastr.success('Document Saved', 'Success');
       modal.css({'display' : 'none'});
     })
@@ -78,31 +122,27 @@ $(document).ready(function() {
     });
   });
 
-  btnShowSpec.on('click', function(e) {
-    axios.get('/specs/' + $(e.target).data('spec'))
+  function setupPrintSpec(e) {
+    console.log('setupPrintSpec');
+    entries = null;
+    spec = null;
+    for(i = 0; i<specs.length; i++){
+      if(specs[i].id == $(e.target).data('spec')){
+        spec = specs[i];
+        break;
+      }
+    }
+    axios.get('/specs/' + spec.id)
     .then(function(response){
-      var table_spec = document.getElementById('table_spec');
-      var specsTable = '<table class="table table-striped table-hover table-sm">';
-      $.each(response.data, function(index, value) {
-        specsTable += '<tr>';
-          specsTable += '<td>' + response.data[index][adresnik.ime] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.adresa] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.mesto] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.telefon] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.tezina] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.p_otkup] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.p_dokument] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.zabeleska] + '</td>';
-          specsTable += '<td>' + response.data[index][adresnik.seriski] + '</td>';
-        specsTable += '</tr>';
-      });
-      specsTable += '</table>';
-      table_spec.innerHTML = specsTable;
-      showSpecsModal();
+      printSpec(response.data, spec);
     })
     .catch(function(error){
-      toastr.error(error, 'There\'s been an error reading the data');
-    });
-  });
+      toastr.error(error, 'There\'s been an error reading the data')
+    })
+  }
 
-})
+  btnShowSpec.on('click', specsTable);
+
+  btnPrintSpec.on('click', setupPrintSpec);
+
+});

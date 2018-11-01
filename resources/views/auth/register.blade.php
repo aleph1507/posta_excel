@@ -25,17 +25,66 @@
                             </div>
                         </div>
 
+
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input id="adresa" type="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
+                                  name="address" value="{{ old('address') }}" required>
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('address') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="opstina" class="col-md-4 col-form-label text-md-right">Municipality</label>
+
+                            <div class="col-md-6">
+                              <input type="text" name="opstina" id="opstina"
+                              class="form-control{{ $errors->has('opstina') ? ' is-invalid' : '' }}"
+                              value="">
+
+                              @if ($errors->has('opstina'))
+                                <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('opstina') }}</strong>
+                                </span>
+                              @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="PO" class="col-md-4 col-form-label text-md-right">PO</label>
+
+                            <div class="col-md-6">
+                              <input type="text" name="PO" id="PO"
+                              class="form-control{{ $errors->has('PO') ? ' is-invalid' : '' }}"
+                              value="">
+
+                              @if ($errors->has('PO'))
+                                <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('PO') }}</strong>
+                                </span>
+                              @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="kontakt_lice_telefon" class="col-md-4 col-form-label text-md-right">Contact Person / Phone</label>
+
+                            <div class="col-md-6">
+                              <input type="text" class="form-control{{ $errors->has('kontakt_lice_telefon') ? ' is-invalid' : '' }}"
+                              name="kontakt_lice_telefon" id="kontakt_lice_telefon" value="">
+
+                              @if ($errors->has('kontakt_lice_telefon'))
+                                <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('kontakt_lice_telefon') }}</strong>
+                                </span>
+                              @endif
                             </div>
                         </div>
 

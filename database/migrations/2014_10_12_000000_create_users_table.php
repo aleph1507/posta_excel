@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('adresa');
             $table->string('opstina');
             $table->string('postenski_broj');
-            $table->string('kontact_lice_telefon');
+            $table->string('kontakt_lice_telefon');
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

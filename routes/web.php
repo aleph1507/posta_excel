@@ -28,3 +28,7 @@ Route::get('/', 'SpecsController@index')->name('specs.index');
 Route::post('/specs/store', 'SpecsController@store')->name('specs.store');
 
 Route::get('/specs/{id}', 'SpecsController@show')->name('specs.show');
+
+Route::post('/user/info', function() {
+  return json_encode(auth()->user());
+})->middleware('auth');
