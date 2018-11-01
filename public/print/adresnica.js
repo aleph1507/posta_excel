@@ -5,7 +5,7 @@ function printAdresnica(adresnica, user, bc){
   console.log('user', user);
   var styleArr = [];
   var style = '';
-  styleArr.push('@page {size: landscape;}');
+  styleArr.push('@page {size: portrait;}');
   styleArr.push('* {font-family: Arial, sans-serif;} p, td, .signDiv{font-size:0.9em;} div {font-size:0.93em;} .sm{font-size: 0.8em}');
   styleArr.push('.cont {border: 1px solid black;}');
   styleArr.push('.padded {padding:1%;}');
@@ -14,7 +14,7 @@ function printAdresnica(adresnica, user, bc){
   styleArr.push('.margined-top {margin-top:1%;}');
   styleArr.push('.margined-bottom {margin-bottom:1%;}');
   styleArr.push('.header {display:flex; justify-content:space-between; align-items:center;}');
-  styleArr.push('.header-logo {max-width: 25%;}');
+  styleArr.push('.header-logo {max-width: 25%; border-right: 1px solid black;}');
   styleArr.push('.border-btn {border-bottom:1px solid black;}');
   styleArr.push('.bordered {border:1px solid black;}');
   styleArr.push('.inline-small {display:inline; width:30%;}');
@@ -29,9 +29,6 @@ function printAdresnica(adresnica, user, bc){
   styleArr.push('.rhsls {display:flex; flex-direction: column; width:60%;}');
   styleArr.push('.rhsrs {display:flex; flex-direction: column; width:40%;}');
   styleArr.push('.lbc {position:relative; max-width:35%;}');
-  // bc = document.createElement('svg');
-  // bc.setAttribute('id', 'barcode');
-
 
   for(i = 0; i<styleArr.length; i++){
     style += styleArr[i];
@@ -49,15 +46,6 @@ function printAdresnica(adresnica, user, bc){
               '<h2 style="margin:0;text-align:center;width:100%;">Адресница</h2>' +
               '<img src=' + tpl_logo + ' class="header-logo">' +
             '</div>';
-
-            // adresa: "qwe"
-            // created_at: "2018-10-30 13:46:56"
-            // id: 2
-            // kontakt_lice_telefon: "qwe"
-            // name: "123"
-            // opstina: "qwe"
-            // postenski_broj: "qwe"
-            // updated_at: "2018-10-30 13:46:56"
 
   isprakac = '<h5 class="caption margined">1. Испраќач</h5>' +
              '<div class="isprakac margined">' +
@@ -86,16 +74,6 @@ function printAdresnica(adresnica, user, bc){
                  '<div class="border-btn">' + '\xa0' + '</div>' +
                '</div>' +
               '</div>';
-
-              // Адреса на примач: "Карл Либкнеџт 7/1-4 СКОпје "
-              // Забелешка: "пов док 2 ком "
-              // Име на примач: "Зујка Костадинова "
-              // Место на примач: "Центар (Центар)"
-              // Повратен документ: "1"
-              // Повратен откуп: "0"
-              // Сериски: "SERISKI2452"
-              // Тежина: "10"
-              // Телефон на примач: "38970337396"
 
   primac = '<h5 class="caption margined">2. Примач</h5>' +
              '<div class="isprakac margined">' +
@@ -248,7 +226,7 @@ function printAdresnica(adresnica, user, bc){
 
   winHTML = docStart + header + hs + note + PS + docEnd;
   printWindow = window.open();
-  printWindow.document.write(winHTML);
+  printWindow.document.write(winHTML + '<br>' + winHTML);
   printWindow.document.close();
 
 }

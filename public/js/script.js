@@ -133,10 +133,6 @@ $(document).ready(function() {
     console.log('setupPrintSpec');
     var spec_bcs = document.getElementById('barcodes');
     var spec_bc;
-    // bc = document.createElement('img');
-    // bc.setAttribute('id', 'barcode' + index);
-    // bcs.appendChild(bc);
-    // JsBarcode(bc, response.data[index][adresnik.seriski]);
 
     entries = null;
     spec = null;
