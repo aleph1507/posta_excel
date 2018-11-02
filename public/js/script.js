@@ -151,9 +151,9 @@ $(document).ready(function() {
       JsBarcode(spec_bc, spec.barcode);
       printSpec(response.data, spec, spec_bc);
     })
-    // .catch(function(error){
-    //   toastr.error(error, 'There\'s been an error reading the data')
-    // })
+    .catch(function(error){
+      toastr.error(error, 'There\'s been an error reading the data')
+    })
   }
 
   btnShowSpec.on('click', specsTable);

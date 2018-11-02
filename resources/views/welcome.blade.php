@@ -17,7 +17,8 @@
                   <th scope="col">Barcode</th>
                   <th scope="col">See Spec</th>
                   <th scope="col">Created At</th>
-                  <th scope="col">Print</th>
+                  <th scope="col">Print Spec</th>
+                  <th scope="col">Print Adresnici</th>
                 </thead>
                 <tbody>
                   @for($i=0; $i<count($specs); $i++)
@@ -34,6 +35,10 @@
                       <td>
                         <button data-spec="{{$specs[$i]->id}}" type="button" name="printSpec"
                           class="btn btn-outline-info btn-sm btnPrintSpec">Print Spec</button>
+                      </td>
+                      <td>
+                        <button data-spec="{{$specs[$i]->id}}" type="button" name="printAdresnici"
+                          class="btn btn-outline-info btn-sm btnPrintAdresnici">Print Adresnici</button>
                       </td>
                     </tr>
                     <script type="text/javascript">
