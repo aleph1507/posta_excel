@@ -1,7 +1,7 @@
 @extends('layouts.app')
   @section('content')
     <script type="text/javascript" src="{{asset('js/JsBarcode.all.min.js')}}"></script>
-    <svg id="barcode" class="d-none"></svg>
+    <div id="barcode" class="d-none"></div>
     <div class="screen">
       <script type="text/javascript">
         var specs = [];
