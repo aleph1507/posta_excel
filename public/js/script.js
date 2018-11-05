@@ -17,6 +17,8 @@ $(document).ready(function() {
   var btnSaveExcel = $("#btnSaveExcel");
   var btnShowSpec = $(".btnShowSpec");
   var btnPrintSpec = $(".btnPrintSpec");
+  var btnPrintAdresnici = $(".btnPrintAdresnici");
+  var adresniciHTML = '';
 
   function makeTable(json_xlsx){
     var table = document.createElement("table");
@@ -38,6 +40,7 @@ $(document).ready(function() {
         var bcs = document.getElementById('barcodes');
         var table_spec = document.getElementById('table_spec');
         var specsTable = '<table class="table table-striped table-hover table-sm">';
+        bcs.innerHTML = '';
         console.log('response.data', response.data);
         $.each(response.data, function(index, value) {
           bc = document.createElement('img');
@@ -151,13 +154,70 @@ $(document).ready(function() {
       JsBarcode(spec_bc, spec.barcode);
       printSpec(response.data, spec, spec_bc);
     })
-    // .catch(function(error){
-    //   toastr.error(error, 'There\'s been an error reading the data')
-    // })
+    .catch(function(error){
+      toastr.error(error, 'There\'s been an error reading the data')
+    })
+  }
+
+  function printAdresnici(e){
+    // console.log('printAdresnici');
+    // console.log('spec data.spec: ', $(e.target).data('spec'));
+    spec = entries = user = null;
+    docEnd = "</body></html>";
+    onLoadScript = "<script type='application/javascript'>window.onload = function(){window.print(); window.onfocus = function() {setTimeout(function(){window.close()},3);} } </script>";
+    docEnd = docEnd;
+    // axios.get('/specs/' . $(e.target).data('spec'))
+    axios.post('/user/info')
+    .then(function(response) {
+      user = response.data;
+      // console.log('user:', user)
+      axios.get('/specs/' + $(e.target).data('spec'))
+      .then(function(response) {
+        entries = response.data;
+        var bcs = document.getElementById('barcodes');
+        bcs.innerHTML = '';
+        console.log('entries: ', entries);
+        for(i = 0; i<entries.length; i++){
+          bc = document.createElement('img');
+          bc.setAttribute('id', 'barcode' + entries[i].id);
+          bcs.appendChild(bc);
+          JsBarcode(bc, entries[i]['Сериски']);
+          // console.log(entries[i]['Сериски']);
+        }
+        console.log('bcs');
+        console.log(bcs);
+        console.log('entries.length: ', entries.length);
+        for(ai = 0; ai<entries.length; ai++){
+          console.log('VO FOR');
+          barcode = document.getElementById('barcode' + entries[ai].id);
+          console.log('vo for, barcode, ai: ', barcode, ai);
+          aHTML = printAdresnica(entries[ai], user, barcode, true, ai == 0) + '</div>';
+          // console.log('aHTML: ');
+          // console.log(aHTML);
+          adresniciHTML += '<br>' + aHTML + '<br>' + aHTML;
+        }
+
+        adresniciHTML += onLoadScript + docEnd;
+        // console.log('adresniciHTML: ', adresniciHTML);
+        printWindow = window.open();
+        printWindow.document.write(adresniciHTML);
+        printWindow.document.close();
+        // console.log('winHTML: ', winHTML);
+      })
+      // .catch(function(error) {
+      //   toastr.error(error, 'There\'s been an error reading the data');
+      // });
+    })
+    .catch(function(error) {
+      toastr.error(error, 'There\'s been an error obtaining the user data');
+    });
+
   }
 
   btnShowSpec.on('click', specsTable);
 
   btnPrintSpec.on('click', setupPrintSpec);
+
+  btnPrintAdresnici.on('click', printAdresnici);
 
 });

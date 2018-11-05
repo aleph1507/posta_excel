@@ -1,8 +1,10 @@
-function printAdresnica(adresnica, user, bc){
+function printAdresnica(adresnica, user, bc, printAll = false, head = true){
   console.log('bc:');
   console.log(bc);
-  console.log('adresnica', adresnica);
-  console.log('user', user);
+  // console.log('adresnica', adresnica);
+  // console.log('user', user);
+  // console.log('printAll: ', printAll);
+  // console.log('head: ', head);
   var styleArr = [];
   var style = '';
   styleArr.push('@page {size: portrait;}');
@@ -35,7 +37,8 @@ function printAdresnica(adresnica, user, bc){
   }
   docStart = '<html><head><style>';
   docStart += style;
-  docStart += '</style></head><body>' + '<div class="cont">';
+  docStart += '</style></head><body>';
+  container = '<div class="cont">';
   docEnd = "</div></body></html>";
   onLoadScript = "<script type='application/javascript'>window.onload = function(){window.print(); window.onfocus = function() {setTimeout(function(){window.close()},3);} } </script>";
   docEnd = onLoadScript + docEnd;
@@ -224,7 +227,9 @@ function printAdresnica(adresnica, user, bc){
 
   PS = '<span class="sm" style="position:relative; left: 60%;">info@novaposta.mk reklamacii@novaposta.mk</span>';
 
-  winHTML = docStart + header + hs + note + PS + docEnd;
+  winHTML = head == true ? docStart + container + header + hs + note + PS + docEnd : container + header + hs + note + PS;
+  if(printAll)
+    return winHTML;
   printWindow = window.open();
   printWindow.document.write(winHTML + '<br>' + winHTML);
   printWindow.document.close();
