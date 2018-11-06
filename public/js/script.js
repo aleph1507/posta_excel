@@ -173,6 +173,7 @@ $(document).ready(function() {
       // console.log('user:', user)
       axios.get('/specs/' + $(e.target).data('spec'))
       .then(function(response) {
+        adresniciHTML = '';
         entries = response.data;
         var bcs = document.getElementById('barcodes');
         bcs.innerHTML = '';

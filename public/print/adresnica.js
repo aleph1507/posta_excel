@@ -1,6 +1,20 @@
 function printAdresnica(adresnica, user, bc, printAll = false, head = true){
-  console.log('bc:');
-  console.log(bc);
+  console.log('adresnica: ', adresnica);
+  povraten = adresnica['Повратен документ'] == 1 ? '30 ден' : '';
+  povraten_otkup = parseFloat(adresnica['Повратен откуп']);
+  provizija = povraten_otkup > 3000 ? povraten_otkup / 100 : 3000;
+  postarina = 120;
+  t = parseFloat(adresnica['Тежина']);
+  if(t >= 2 && t <= 5) postarina = 140;
+  if(t > 5 && t <= 10) postarina = 160;
+  if(t > 10 && t <= 20) postarina = 200;
+  if(t > 20 && t <= 30) postarina = 265;
+  if(t > 30 && t <= 40) postarina = 270;
+  if(t > 40 && t <= 50) postarina = 320;
+  if(t > 50) postarina = 500;
+
+  // console.log('bc:');
+  // console.log(bc);
   // console.log('adresnica', adresnica);
   // console.log('user', user);
   // console.log('printAll: ', printAll);
@@ -31,6 +45,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
   styleArr.push('.rhsls {display:flex; flex-direction: column; width:60%;}');
   styleArr.push('.rhsrs {display:flex; flex-direction: column; width:40%;}');
   styleArr.push('.lbc {position:relative; max-width:35%;}');
+  styleArr.push('.text-right {text-align:right;}');
 
   for(i = 0; i<styleArr.length; i++){
     style += styleArr[i];
@@ -119,7 +134,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
             '<div class="hs">' +
               '<div class="fhs">' +
                 '<span>Поштарина</span>' +
-                '<div class="bordered">\xa0</div>' +
+                '<div class="bordered text-right">' + postarina + '</div>' +
               '</div>' +
               '<div class="fhs">' +
                 '<h5 class="caption-full margined" style="margin-top:0;"> 5. Плаќа (заокружи)</h5>' +
@@ -135,7 +150,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
             '<div class="hs">' +
               '<div class="fhs">' +
                 '<span>Осигурување на пратка</span>' +
-                '<div class="bordered">\xa0</div>' +
+                '<div class="bordered text-right">\xa0</div>' +
               '</div>' +
               '<div class="fhs">' +
                 '<h5 class="margined" style="margin-top:0;"> \xa0</h5>' +
@@ -151,7 +166,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
             '<div class="hs">' +
               '<div class="fhs">' +
                 '<span>Повратен откуп</span>' +
-                '<div class="bordered">\xa0</div>' +
+                '<div class="bordered text-right">' + povraten_otkup + '</div>' +
               '</div>' +
               '<div class="fhs">' +
                 '<h5 class="margined" style="margin-top:0;"> \xa0</h5>' +
@@ -167,7 +182,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
             '<div class="hs">' +
               '<div class="fhs">' +
                 '<span>Провизија</span>' +
-                '<div class="bordered">\xa0</div>' +
+                '<div class="bordered text-right">' + provizija + '</div>' +
               '</div>' +
               '<div class="fhs">' +
                 '<h5 class="margined" style="margin-top:0;"> \xa0</h5>' +
@@ -183,7 +198,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
             '<div class="hs">' +
               '<div class="fhs">' +
                 '<span>Повратен документ</span>' +
-                '<div class="bordered">\xa0</div>' +
+                '<div class="bordered text-right">' + povraten + '</div>' +
               '</div>' +
               '<div class="fhs">' +
                 '<h5 class="margined" style="margin-top:0;"> \xa0</h5>' +
@@ -206,7 +221,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
             '<div class="caption-full" style="margin-top:5%;"> 6. Вид на пратка</div>' +
             '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">\xa0</div> <span>Број на писма</span></div>' +
             '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">\xa0</div> <span>Број на пакети</span></div>' +
-            '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">\xa0</div> <span>Вкупна тежина(kg)</span></div>' +
+            '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">' + adresnica['Тежина'] + '</div> <span>Вк. тежина(kg)</span></div>' +
             '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">\xa0</div> <span>Висина(m)</span></div>' +
             '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">\xa0</div> <span>Должина(m)</span></div>' +
             '<div style="display:flex;" class="margined-top"><div class="bordered inline-small">\xa0</div> <span>Ширина(m)</span></div>' +
