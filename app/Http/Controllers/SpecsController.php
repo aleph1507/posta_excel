@@ -51,9 +51,14 @@ class SpecsController extends Controller
       for($i = 0; $i<count($data); $i++){
         $data[$i]->spec_id = $s->id;
         $data[$i]->{Adresnik::$seriski} = 'SERISKI';
-        $e = Entry::create((array)$data[$i]);
+        $da = (array)$data[$i];
+        if(!array_key_exists('Место на примач', $da)){
+          $da['Место на примач'] = '';
+        }
+        $e = Entry::create($da);
         $e->save();
-        $e->{Adresnik::$seriski} = 'SERISKI' . auth()->user()->id . $s->id . $e->id;
+        // $e->{Adresnik::$seriski} = 'МК' . (string)($e->id + 10000000);
+        $e->{Adresnik::$seriski} = (string)($e->id + 10000000) . 'MK';
         $e->save();
       }
 
