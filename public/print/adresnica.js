@@ -45,7 +45,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
   styleArr.push('.rhs {display:flex; width:50%;}');
   styleArr.push('.rhsls {display:flex; flex-direction: column; width:60%;}');
   styleArr.push('.rhsrs {display:flex; flex-direction: column; width:40%;}');
-  styleArr.push('.lbc {position:relative; max-width:88%;}');
+  styleArr.push('.lbc {position:relative; max-width:84%;}');
   styleArr.push('.text-right {text-align:right;}');
 
   for(i = 0; i<styleArr.length; i++){
@@ -240,7 +240,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
 
   hs = '<div class="hs" style="position:relative;">' + lhs + rhs + '</div>';
 
-  note = '<p style="padding:1%;">сo потпис испраќачот и примачот потврдуваат дека сите наведени податоци се вистинити и точни со што Нова Пошта не одговара за евентуалните последици заради неисправно пополнета адресница</p>';
+  note = '<p style="padding: 1%;">сo потпис испраќачот и примачот потврдуваат дека сите наведени податоци се вистинити и точни со што Тотал Пост Логистик не одговара за евентуалните последици заради неисправно пополнета адресница</p>';
 
   PS = '<!-- <span class="sm" style="position:relative; left: 60%;">info@novaposta.mk reklamacii@novaposta.mk</span> -->';
 
