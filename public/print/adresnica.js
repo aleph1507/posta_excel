@@ -1,8 +1,9 @@
 function printAdresnica(adresnica, user, bc, printAll = false, head = true){
   console.log('adresnica: ', adresnica);
-  povraten = adresnica['Повратен документ'] == 1 ? '30 ден' : '';
+  povraten = adresnica['Повратен документ'] == 1 ? '30 ден' : '0';
   povraten_otkup = parseFloat(adresnica['Повратен откуп']);
-  provizija = povraten_otkup > 3000 ? povraten_otkup / 100 : 3000;
+  provizija = povraten_otkup > 3000 ? povraten_otkup / 100 : povraten_otkup == 0 ? 0 : 30;
+  zabeleska = adresnica['Забелешка'] ? adresnica['Забелешка'] : '\xa0';
   postarina = 120;
   t = parseFloat(adresnica['Тежина']);
   if(t >= 2 && t <= 5) postarina = 140;
@@ -44,7 +45,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
   styleArr.push('.rhs {display:flex; width:50%;}');
   styleArr.push('.rhsls {display:flex; flex-direction: column; width:60%;}');
   styleArr.push('.rhsrs {display:flex; flex-direction: column; width:40%;}');
-  styleArr.push('.lbc {position:relative; max-width:35%;}');
+  styleArr.push('.lbc {position:relative; max-width:88%;}');
   styleArr.push('.text-right {text-align:right;}');
 
   for(i = 0; i<styleArr.length; i++){
@@ -211,9 +212,10 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
               '</div>' +
             '</div>' +
 
-            '<div class="bordered margined-top">Нова Пошта доо<br>улица 1550 бр. 14 Визбегово<br>02/313 88 88 078 88 88 55</div>' +
+            '<div class="bordered margined-top">Тотал Пост Логистик дооел<br>улица БОРИС ТРАЈКОВСКИ 214А <br>078 207 878</div>' +
 
             '<h5 class="caption-full"> 8. Забелешка</h5>' +
+              zabeleska +
           '</div>';
   rhsrs = '<div class="rhsrs">' +
             '<span class="margined-top" style="margin-top: 25%;">Сериски број</span>' +
@@ -240,7 +242,7 @@ function printAdresnica(adresnica, user, bc, printAll = false, head = true){
 
   note = '<p style="padding:1%;">сo потпис испраќачот и примачот потврдуваат дека сите наведени податоци се вистинити и точни со што Нова Пошта не одговара за евентуалните последици заради неисправно пополнета адресница</p>';
 
-  PS = '<span class="sm" style="position:relative; left: 60%;">info@novaposta.mk reklamacii@novaposta.mk</span>';
+  PS = '<!-- <span class="sm" style="position:relative; left: 60%;">info@novaposta.mk reklamacii@novaposta.mk</span> -->';
 
   winHTML = head == true ? docStart + container + header + hs + note + PS + docEnd : container + header + hs + note + PS;
   if(printAll)

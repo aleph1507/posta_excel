@@ -92,6 +92,10 @@
             </div>
         </div>
       </div>
+
+      {{-- <div class="w-100 pb-5 text-center" style="background: #fff; position:relative; bottom:0; max-width: 99%;">
+        <img src="{{asset('img/tpl-logo.jpg')}}" class="img-fluid mt-5" alt="TPL">
+      </div> --}}
   </div>
 
   <script type="text/javascript" src="{{asset('print/spec.js')}}"></script>
