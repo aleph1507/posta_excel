@@ -57,7 +57,8 @@ class SpecsController extends Controller
         }
         $e = Entry::create($da);
         $e->save();
-        $e->{Adresnik::$seriski} = 'SERISKI' . auth()->user()->id . $s->id . $e->id;
+        // $e->{Adresnik::$seriski} = 'МК' . (string)($e->id + 10000000);
+        $e->{Adresnik::$seriski} = (string)($e->id + 10000000) . 'MK';
         $e->save();
       }
 

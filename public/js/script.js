@@ -46,7 +46,10 @@ $(document).ready(function() {
           bc = document.createElement('img');
           bc.setAttribute('id', 'barcode' + index);
           bcs.appendChild(bc);
-          JsBarcode(bc, response.data[index][adresnik.seriski]);
+          JsBarcode(bc, response.data[index][adresnik.seriski],{
+            // format: "CODE128C",
+            ean128: true
+          });
           specsTable += '<tr>';
             specsTable += '<td>' + response.data[index][adresnik.ime] + '</td>';
             specsTable += '<td>' + response.data[index][adresnik.adresa] + '</td>';
@@ -141,7 +144,6 @@ $(document).ready(function() {
     spec = null;
     for(i = 0; i<specs.length; i++){
       if(specs[i].id == $(e.target).data('spec')){
-
         spec = specs[i];
         break;
       }
@@ -151,7 +153,10 @@ $(document).ready(function() {
       spec_bc = document.createElement('img');
       // spec_bc.setAttribute('id', '')
       spec_bcs.appendChild(spec_bc);
-      JsBarcode(spec_bc, spec.barcode);
+      // JsBarcode(spec_bc, spec.barcode,{
+      //   format: "CODE128",
+      //   ean128: true
+      // });
       printSpec(response.data, spec, spec_bc);
     })
     .catch(function(error){
@@ -182,7 +187,10 @@ $(document).ready(function() {
           bc = document.createElement('img');
           bc.setAttribute('id', 'barcode' + entries[i].id);
           bcs.appendChild(bc);
-          JsBarcode(bc, entries[i]['Сериски']);
+          // JsBarcode(bc, entries[i]['Сериски'],{
+          //   format: "CODE128",
+          //   ean128: true
+          // });
           // console.log(entries[i]['Сериски']);
         }
         console.log('bcs');
