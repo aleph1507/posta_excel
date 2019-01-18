@@ -40,6 +40,6 @@ class User extends Authenticatable
     }
 
     public function add_spec(Spec $s){
-      $this->specs()->save($spec);
+      $this->specs()->save($s);
     }
 }
